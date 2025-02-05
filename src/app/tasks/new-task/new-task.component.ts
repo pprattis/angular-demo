@@ -1,4 +1,4 @@
-import {Component, EventEmitter, inject, Input, Output} from '@angular/core';
+import {Component, inject, input, output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NewTask} from '../task/task.model';
 import {TasksService} from '../tasks.service';
@@ -12,8 +12,8 @@ import {TasksService} from '../tasks.service';
   styleUrl: './new-task.component.css'
 })
 export class NewTaskComponent {
-  @Input({required: true}) userId!: string;
-  @Output() close = new EventEmitter<void>();
+  readonly userId = input.required<string>();
+  readonly close = output<void>();
   enteredTitle = '';
   enteredSummary = '';
   enteredDate = '';
@@ -31,7 +31,7 @@ export class NewTaskComponent {
       summary: this.enteredSummary,
       dueDate: this.enteredDate
     },
-      this.userId
+      this.userId()
     );
     this.close.emit();
   }

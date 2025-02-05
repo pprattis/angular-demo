@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import { type User } from './user.model';
 import {CardComponent} from '../../shared/card/card.component';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-user',
@@ -11,15 +12,15 @@ import {CardComponent} from '../../shared/card/card.component';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required: true}) user!: User;
-  @Input({required: true}) selected!: boolean;
-  @Output() select = new EventEmitter<string>();
+  readonly user = input.required<User>();
+  readonly selected = input.required<boolean>();
+  readonly select = output<string>();
 
   get imagePath() {
-    return 'users/' + this.user.avatar;
+    return 'users/' + this.user().avatar;
   }
 
   onUserSelect() {
-    this.select.emit(this.user.id);
+    this.select.emit(this.user().id);
   }
 }
